@@ -1,11 +1,11 @@
 /*!
- * @file Adafruit_BMP3XX.h
+ * @file Adafruit_BMP581.h
  *
- * Adafruit BMP3XX temperature & barometric pressure sensor driver
+ * Adafruit BMP581 temperature & barometric pressure sensor driver
  *
- * This is the documentation for Adafruit's BMP3XX driver for the
+ * This is the documentation for Adafruit's BMP581 driver for the
  * Arduino platform.  It is designed specifically to work with the
- * Adafruit BMP388 breakout: https://www.adafruit.com/products/3966
+ * Adafruit BMP581 breakout: https://www.adafruit.com/products/3966
  *
  * These sensors use I2C or SPI to communicate
  *
@@ -19,10 +19,10 @@
  *
  */
 
-#ifndef __BMP3XX_H__
-#define __BMP3XX_H__
+#ifndef __BMP581_H__
+#define __BMP581_H__
 
-#include "bmp3.h"
+#include "bmp5.h"
 
 #include <Adafruit_I2CDevice.h>
 #include <Adafruit_SPIDevice.h>
@@ -30,19 +30,19 @@
 /*=========================================================================
     I2C ADDRESS/BITS
     -----------------------------------------------------------------------*/
-#define BMP3XX_DEFAULT_ADDRESS (0x77) ///< The default I2C address
+#define BMP581_DEFAULT_ADDRESS (0x47) ///< The default I2C address
 /*=========================================================================*/
-#define BMP3XX_DEFAULT_SPIFREQ (1000000) ///< The default SPI Clock speed
+#define BMP581_DEFAULT_SPIFREQ (1000000) ///< The default SPI Clock speed
 
-/** Adafruit_BMP3XX Class for both I2C and SPI usage.
+/** Adafruit_BMP581 Class for both I2C and SPI usage.
  *  Wraps the Bosch library for Arduino usage
  */
 
-class Adafruit_BMP3XX {
+class Adafruit_BMP581 {
 public:
-  Adafruit_BMP3XX();
+  Adafruit_BMP581();
 
-  bool begin_I2C(uint8_t addr = BMP3XX_DEFAULT_ADDRESS,
+  bool begin_I2C(uint8_t addr = BMP581_DEFAULT_ADDRESS,
                  TwoWire *theWire = &Wire);
   bool begin_SPI(uint8_t cs_pin, SPIClass *theSPI = &SPI);
   bool begin_SPI(int8_t cs_pin, int8_t sck_pin, int8_t miso_pin,
@@ -79,7 +79,9 @@ private:
 
   uint8_t spixfer(uint8_t x);
 
-  struct bmp3_dev the_sensor;
+  struct bmp5_dev the_sensor;
+  struct bmp5_osr_odr_press_config osr_odr_press_cfg;
+  struct bmp5_iir_config set_iir_cfg;
 };
 
 #endif
